@@ -1,0 +1,22 @@
+{
+  "name": "shopify-monitor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benbaessler/Shopify-Monitor.git"
+  },
+  "author": "Ben Baessler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benbaessler/Shopify-Monitor/issues"
+  },
+  "homepage": "https://github.com/benbaessler/Shopify-Monitor#readme",
+  "dependencies": {
+    "got": "^11.8.2"
+  }
+}
