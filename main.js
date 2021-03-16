@@ -1,12 +1,8 @@
-const got = require('got');
+const monitor = require('./monitor');
 
 const url = 'https://bdgastore.com/products.json';
+const client = new monitor.Monitor(url);
 
-(async () => {
-  try {
-    const response = await got(url);
-    console.log(response.body);
-  } catch (error) {
-    console.error(error);
-  }
-})();
+const request = client.getPage()
+
+request.then((response) => console.log(response.products));
