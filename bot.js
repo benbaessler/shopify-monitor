@@ -14,23 +14,29 @@ const client = new Monitor(url);
 const messageTemplate = (item) => {
   return new MessageEmbed()
     .setColor(0x5e34eb)
-    .setImage(item.images[0].src)
-    .setAuthor('Ben\'s Monitor - v0.0.1')
-    .setTitle(`New product on ${url}!`)
-    
+    .setThumbnail(item.images[0].src)
+    .setAuthor(url)
+    .setTitle(item.title)
+    .setURL(`https://${url}/products/${item.handle}`)
+    .addFields(
+      { name: 'Price', value: '$' + item.variants[0].price, inline: true },
+      { name: 'Field 2', value: 'test', inline: true },
+    )
+    .setFooter('Ben\'s Monitor | v0.0.1')
+
 };  
 
 bot.on('ready', () => {
   console.log('Bot running...');
 
   const request = client.getPage();
-    request.then((response) => {
-      const latestItem = client.getLatestItem(response);
-      bot.channels.fetch(channelID)
-      .then(channel => {
-          channel.send(messageTemplate(latestItem));
-      })
-    });
+  request.then((response) => {
+    const latestItem = client.getLatestItem(response);
+    bot.channels.fetch(channelID)
+    .then(channel => {
+        channel.send(messageTemplate(latestItem));
+    })
+  });
 });
 
 /* bot.on('message', message => {

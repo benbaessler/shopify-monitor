@@ -10,7 +10,7 @@ class Monitor {
       const response = await got(this.url).json();
       return response;
     } catch (error) {
-      return error;
+      console.error(error);
     }
   }
 
