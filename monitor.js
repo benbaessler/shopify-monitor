@@ -1,5 +1,5 @@
-const e = require('express');
 const got = require('got');
+const fs = require('fs')
 const { send } = require('./bot');
 
 class Monitor {
@@ -15,14 +15,14 @@ class Monitor {
   }
 
   request(send) {
-    let item = require('./item.json');
+    let id = require('./id.json');
     const request = this.getPage();
     request.then((response) => {
       const latestItem = this.getLatestItem(response);
       console.log(item.id, latestItem.id);
       if (item.id !== latestItem.id) {
         send(latestItem);
-        item.id = latestItem.id;
+        // fs.writeFile('id.json', `{ "id": "${latestItem.id}"}`);
         console.log(`New item: ${this.url.slice(0, -5)}/${latestItem.handle}`);
       } else {
         console.log('Request made');
@@ -60,4 +60,4 @@ class Monitor {
 
 }
 
-module.exports.Monitor = Monitor;
+module.exports = Monitor;

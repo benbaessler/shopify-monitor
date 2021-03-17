@@ -2,14 +2,14 @@ const { Client, MessageEmbed } = require('discord.js');
 const { Monitor } = require('./monitor');
 const config = require('./config.json');
 
-
 // Discord Bot
 const bot = new Client();
 
 // Monitor
 const channelID = '817566327111548978';
 const url = 'bdgastore.com';
-const client = new Monitor(url);
+const client = new Monitor;
+client.url = url;
 
 const messageTemplate = (item) => {
   function getATC () {
