@@ -1,8 +1,33 @@
+const e = require('express');
 const got = require('got');
+const { send } = require('./bot');
 
 class Monitor {
   constructor(url) {
     this.url = `https://${url}/products.json`;
+  }
+
+  start(interval, send) {
+    this.request(send);
+    setInterval(() => {
+      this.request(send);
+    }, interval);
+  }
+
+  request(send) {
+    let item = require('./item.json');
+    const request = this.getPage();
+    request.then((response) => {
+      const latestItem = this.getLatestItem(response);
+      console.log(item.id, latestItem.id);
+      if (item.id !== latestItem.id) {
+        send(latestItem);
+        item.id = latestItem.id;
+        console.log(`New item: ${this.url.slice(0, -5)}/${latestItem.handle}`);
+      } else {
+        console.log('Request made');
+      }
+    });
   }
 
   async getPage() {

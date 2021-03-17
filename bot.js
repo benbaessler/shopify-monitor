@@ -2,6 +2,7 @@ const { Client, MessageEmbed } = require('discord.js');
 const { Monitor } = require('./monitor');
 const config = require('./config.json');
 
+
 // Discord Bot
 const bot = new Client();
 
@@ -35,34 +36,33 @@ const messageTemplate = (item) => {
     )
     .setFooter('Ben\'s Monitor v0.0.1')
     .setTimestamp()
-};  
+};
+
+function send(item) {
+  bot.channels.fetch(channelID)
+  .then(channel => {
+      channel.send(messageTemplate(item));
+  });
+}
 
 bot.on('ready', () => {
   console.log('Bot running...');
 
-  const request = client.getPage();
+  client.start(10000, send);
+
+  /* const request = client.getPage();
   request.then((response) => {
     const latestItem = client.getLatestItem(response);
     bot.channels.fetch(channelID)
     .then(channel => {
         channel.send(messageTemplate(latestItem));
     })
-  });
+  }); */
 });
 
-/* bot.on('message', message => {
-  if (message.author.id === myDiscordID) {
-    // Execute test
-    const request = client.getPage();
-    request.then((response) => {
-      const latestItem = client.getLatestItem(response);
-      message.channel.send(messageTemplate(latestItem));
-    });
-  } 
-}); */
+bot.on('message', message => {
+});
 
 bot.login(config.token);
 
-setTimeout(() => {
-  bot.destroy();
-}, 3000);
+module.exports = { send };
