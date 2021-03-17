@@ -1,7 +1,6 @@
 const { Client, MessageEmbed } = require('discord.js');
 const { Monitor } = require('./monitor');
-
-const myDiscordID = '735148946841927682';
+const config = require('./config.json');
 
 // Discord Bot
 const bot = new Client();
@@ -12,6 +11,17 @@ const url = 'bdgastore.com';
 const client = new Monitor(url);
 
 const messageTemplate = (item) => {
+  function getATC () {
+    const variants = item.variants;
+    let result = '';
+    for (let i = 0; i < variants.length; i++) {
+      if (variants[i].available === true) {
+        result += `[${variants[i].option2}](https://${url}/cart/${variants[i].id}:1) | `;
+      }
+    }
+    return result.slice(0, -3);
+  }
+
   return new MessageEmbed()
     .setColor(0x5e34eb)
     .setThumbnail(item.images[0].src)
@@ -20,10 +30,11 @@ const messageTemplate = (item) => {
     .setURL(`https://${url}/products/${item.handle}`)
     .addFields(
       { name: 'Price', value: '$' + item.variants[0].price, inline: true },
-      { name: 'Field 2', value: 'test', inline: true },
+      { name: 'Color', value: item.options[0].values[0], inline: true },
+      { name: 'ATC', value: getATC() },
     )
-    .setFooter('Ben\'s Monitor | v0.0.1')
-
+    .setFooter('Ben\'s Monitor v0.0.1')
+    .setTimestamp()
 };  
 
 bot.on('ready', () => {
@@ -50,7 +61,7 @@ bot.on('ready', () => {
   } 
 }); */
 
-bot.login('ODE3NDg5ODI3OTY3NjY0MTU4.YEKQuw.oqeB5-XoBFk6p4yOQGraBJhJ8Og');
+bot.login(config.token);
 
 setTimeout(() => {
   bot.destroy();

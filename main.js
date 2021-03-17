@@ -6,6 +6,7 @@ const client = new Monitor(url);
 const request = client.getPage()
 
 request.then((response) => {
-  console.log(client.getParameters(response));
-  console.log(client.getLatestItem(response).options);
+  // console.log(client.getParameters(response));
+  console.log(client.getLatestItem(response).variants);
+  // console.log(client.getItembyID(response, 6548024393802));
 });
