@@ -1,8 +1,11 @@
-const monitor = require('./monitor');
+const { Monitor } = require('./monitor');
 
-const url = 'https://bdgastore.com/products.json';
-const client = new monitor.Monitor(url);
+const url = 'bdgastore.com';
+const client = new Monitor(url);
 
 const request = client.getPage()
 
-request.then((response) => console.log(response.products));
+request.then((response) => {
+  // console.log(client.getParameters(response));
+  console.log(client.getLatestItem(response).handle);
+});

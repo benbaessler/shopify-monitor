@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/benbaessler/Shopify-Monitor#readme",
   "dependencies": {
+    "discord.js": "^12.5.1",
     "got": "^11.8.2"
   }
 }
