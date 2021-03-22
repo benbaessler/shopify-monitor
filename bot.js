@@ -47,7 +47,8 @@ function send(item) {
 bot.on('ready', () => {
   console.log('Bot running...');
 
-  monitor.start(10000, send);
+  // Edit request interval here (in ms).
+  monitor.start(interval = 10000, send);
 });
 
 bot.on('message', message => {
