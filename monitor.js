@@ -1,5 +1,6 @@
 const got = require('got');
 const fs = require('fs')
+const id = require('./json/id.json');
 const { send } = require('./bot');
 
 class Monitor {
@@ -15,14 +16,22 @@ class Monitor {
   }
 
   request(send) {
-    let id = require('./id.json');
     const request = this.getPage();
     request.then((response) => {
       const latestItem = this.getLatestItem(response);
-      console.log(item.id, latestItem.id);
-      if (item.id !== latestItem.id) {
+      const latestID = latestItem.id.toString();
+      let lastID = fs.readFile('./json/id.json', 'utf8', (error, data) => {
+        if (error) throw error;
+        return JSON.parse(data);
+      });
+      console.log(lastID, latestID);
+      if (lastID !== latestID) {
         send(latestItem);
-        // fs.writeFile('id.json', `{ "id": "${latestItem.id}"}`);
+        fs.writeFile('./json/id.json', `{ "value": "${latestID}" }`, function(error) {
+          if (error) {
+            console.error(error);
+          }
+        });
         console.log(`New item: ${this.url.slice(0, -5)}/${latestItem.handle}`);
       } else {
         console.log('Request made');
@@ -60,4 +69,4 @@ class Monitor {
 
 }
 
-module.exports = Monitor;
+module.exports.Monitor = Monitor;

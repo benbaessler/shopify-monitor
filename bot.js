@@ -1,5 +1,5 @@
 const { Client, MessageEmbed } = require('discord.js');
-const { Monitor } = require('./monitor');
+const { Monitor } = require('./monitor.js');
 const config = require('./config.json');
 
 // Discord Bot
@@ -8,8 +8,7 @@ const bot = new Client();
 // Monitor
 const channelID = '817566327111548978';
 const url = 'bdgastore.com';
-const client = new Monitor;
-client.url = url;
+let monitor = new Monitor(url);
 
 const messageTemplate = (item) => {
   function getATC () {
@@ -41,14 +40,14 @@ const messageTemplate = (item) => {
 function send(item) {
   bot.channels.fetch(channelID)
   .then(channel => {
-      channel.send(messageTemplate(item));
+    channel.send(messageTemplate(item));
   });
 }
 
 bot.on('ready', () => {
   console.log('Bot running...');
 
-  client.start(10000, send);
+  monitor.start(10000, send);
 
   /* const request = client.getPage();
   request.then((response) => {
