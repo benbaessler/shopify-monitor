@@ -48,15 +48,6 @@ bot.on('ready', () => {
   console.log('Bot running...');
 
   monitor.start(10000, send);
-
-  /* const request = client.getPage();
-  request.then((response) => {
-    const latestItem = client.getLatestItem(response);
-    bot.channels.fetch(channelID)
-    .then(channel => {
-        channel.send(messageTemplate(latestItem));
-    })
-  }); */
 });
 
 bot.on('message', message => {

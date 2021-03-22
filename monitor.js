@@ -6,6 +6,7 @@ const { send } = require('./bot');
 class Monitor {
   constructor(url) {
     this.url = `https://${url}/products.json`;
+    this.lastID = id.value;
   }
 
   start(interval, send) {
@@ -20,13 +21,10 @@ class Monitor {
     request.then((response) => {
       const latestItem = this.getLatestItem(response);
       const latestID = latestItem.id.toString();
-      let lastID = fs.readFile('./json/id.json', 'utf8', (error, data) => {
-        if (error) throw error;
-        return JSON.parse(data);
-      });
-      console.log(lastID, latestID);
-      if (lastID !== latestID) {
+      console.log(this.lastID, latestID);
+      if (this.lastID !== latestID) {
         send(latestItem);
+        this.lastID = latestID;
         fs.writeFile('./json/id.json', `{ "value": "${latestID}" }`, function(error) {
           if (error) {
             console.error(error);
