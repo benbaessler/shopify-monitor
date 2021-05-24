@@ -1,7 +1,7 @@
 const got = require('got');
 const fs = require('fs')
 const id = require('./json/id.json');
-const { send } = require('./bot');
+const { send } = require('./main');
 
 class Monitor {
   constructor(url) {
@@ -21,7 +21,6 @@ class Monitor {
     request.then((response) => {
       const latestItem = this.getLatestItem(response);
       const latestID = latestItem.id.toString();
-      console.log(this.lastID, latestID);
       if (this.lastID !== latestID) {
         send(latestItem);
         this.lastID = latestID;

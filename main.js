@@ -6,7 +6,7 @@ const config = require('./config.json');
 const bot = new Client();
 
 // Monitor
-const channelID = '817566327111548978';
+const channelID = '846188405137866762';
 const url = 'bdgastore.com';
 let monitor = new Monitor(url);
 
